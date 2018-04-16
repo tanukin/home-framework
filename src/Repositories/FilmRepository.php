@@ -2,6 +2,7 @@
 
 namespace Otus\Repositories;
 
+use Otus\Core\FilmBuilder;
 use Otus\Interfaces\FilmRepositoryInterface;
 
 class FilmRepository implements FilmRepositoryInterface
@@ -10,15 +11,21 @@ class FilmRepository implements FilmRepositoryInterface
      * @var \PDO
      */
     private $pdo;
+    /**
+     * @var FilmBuilder
+     */
+    private $filmBuilder;
 
     /**
      * FilmRepository constructor.
      *
      * @param \PDO $pdo
+     * @param FilmBuilder $filmBuilder
      */
-    public function __construct(\PDO $pdo)
+    public function __construct(\PDO $pdo, FilmBuilder $filmBuilder)
     {
         $this->pdo = $pdo;
+        $this->filmBuilder = $filmBuilder;
     }
 
     /**
@@ -45,7 +52,7 @@ class FilmRepository implements FilmRepositoryInterface
 
         $sth = $this->pdo->query($sql);
 
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->getArrayObjectFilm($sth->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -72,7 +79,7 @@ class FilmRepository implements FilmRepositoryInterface
 
         $sth = $this->pdo->query($sql);
 
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->getArrayObjectFilm($sth->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -97,7 +104,7 @@ class FilmRepository implements FilmRepositoryInterface
         $sth = $this->pdo->prepare($sql);
         $sth->execute([':from' => $fromAge, ':to' => $toAge]);
 
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->getArrayObjectFilm($sth->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -121,7 +128,7 @@ class FilmRepository implements FilmRepositoryInterface
 
         $sth = $this->pdo->query($sql);
 
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->getArrayObjectFilm($sth->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -139,4 +146,19 @@ class FilmRepository implements FilmRepositoryInterface
 
         return implode(',', $arr);
     }
+
+    /**
+     * Returns array of objects Film
+     *
+     * @param array $data
+     *
+     * @return array
+     */
+    private function getArrayObjectFilm(array $data): array
+    {
+        return array_map(function ($item) {
+            return $this->filmBuilder->getFilm($item);
+        }, $data);
+    }
+
 }
