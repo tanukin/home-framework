@@ -12,6 +12,13 @@ class RequestBuilder implements RequestBuilderInterface
      */
     public function getRequest(array $get, array $post): RequestInterface
     {
-        // TODO: Implement getRequest() method.
+        $uri = $_SERVER["REQUEST_URI"];
+        $pos = strpos($uri, '?');
+        if ($pos !== false) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $get['uri'] = $uri;
+
+        return new Request($get, $post);
     }
 }
