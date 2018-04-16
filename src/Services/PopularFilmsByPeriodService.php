@@ -10,19 +10,9 @@ use Otus\Interfaces\FilmServiceInterface;
 class PopularFilmsByPeriodService implements FilmServiceInterface
 {
     /**
-     * @var FilmRepositoryInterface
-     */
-    private $filmRepository;
-
-    public function __construct(FilmRepositoryInterface $filmRepository)
-    {
-        $this->filmRepository = $filmRepository;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function getFilms(FilmOptionsDto $optionsDto): array
+    public function getFilms(FilmRepositoryInterface $filmRepository, FilmOptionsDto $optionsDto): array
     {
         $fromYear = $optionsDto->getFromYear();
         $toYear = $optionsDto->getToYear();
@@ -36,6 +26,6 @@ class PopularFilmsByPeriodService implements FilmServiceInterface
         if ($fromYear > $toYear)
             list($fromYear, $toYear) = [$toYear, $fromYear];
 
-        return $this->filmRepository->getPopularFilmsByPeriod($fromYear, $toYear);
+        return $filmRepository->getPopularFilmsByPeriod($fromYear, $toYear);
     }
 }

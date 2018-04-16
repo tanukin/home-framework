@@ -10,11 +10,10 @@ interface FilmServiceInterface
     /**
      * Returns array popular films by options
      *
+     * @param FilmRepositoryInterface $filmRepository
      * @param FilmOptionsDto $optionsDto
      *
      * @return array
-     *
-     * @throws FilmsException
      */
-    public function getFilms(FilmOptionsDto $optionsDto): array;
+    public function getFilms(FilmRepositoryInterface $filmRepository, FilmOptionsDto $optionsDto): array;
 }

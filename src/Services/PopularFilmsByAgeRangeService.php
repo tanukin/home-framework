@@ -10,19 +10,9 @@ use Otus\Interfaces\FilmServiceInterface;
 class PopularFilmsByAgeRangeService implements FilmServiceInterface
 {
     /**
-     * @var FilmRepositoryInterface
-     */
-    private $filmRepository;
-
-    public function __construct(FilmRepositoryInterface $filmRepository)
-    {
-        $this->filmRepository = $filmRepository;
-    }
-
-    /**
      * {@inheritdoc}
      */
-    public function getFilms(FilmOptionsDto $optionsDto): array
+    public function getFilms(FilmRepositoryInterface $filmRepository, FilmOptionsDto $optionsDto): array
     {
         $fromAge = $optionsDto->getFromAge();
         $toAge = $optionsDto->getToAge();
@@ -36,6 +26,6 @@ class PopularFilmsByAgeRangeService implements FilmServiceInterface
         if ($fromAge > $toAge)
             list($fromAge, $toAge) = [$toAge, $fromAge];
 
-        return $this->filmRepository->getPopularFilmsByAgeRange($fromAge, $toAge);
+        return $filmRepository->getPopularFilmsByAgeRange($fromAge, $toAge);
     }
 }
