@@ -2,6 +2,7 @@
 
 namespace Otus\Core;
 
+use Otus\Entities\Film;
 use Otus\Interfaces\ResponseInterface;
 
 class HtmlResponse implements ResponseInterface
@@ -28,6 +29,40 @@ class HtmlResponse implements ResponseInterface
      */
     public function getResponse(): string
     {
-        return (string)$this->data;
+        $html = '
+            <table style="width: 100%;" border="1">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>title</th>
+                        <th>Release date</th>
+                    </tr>
+                </thead>
+                <tbody>                                                               
+                ';
+
+        foreach ($this->data as $item) {
+            if (!($item instanceof Film))
+                continue;
+
+            $html .= sprintf("
+                    <tr>
+                        <td>%s</td>
+                        <td>%s</td>
+                        <td>%s</td> 
+                    </tr>
+                    ",
+                $item->getId(),
+                $item->getTitle(),
+                $item->getReleaseDate()
+            );
+        }
+
+        $html .= '                
+            </tbody>
+            </table>
+                ';
+
+        return $html;
     }
 }

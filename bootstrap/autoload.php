@@ -3,7 +3,7 @@
 use Otus\Controllers\PopularFilmsByAgeRangeController;
 use Otus\Controllers\PopularFilmsByGenreController;
 use Otus\Controllers\PopularFilmsByPeriodController;
-use Otus\Controllers\PopularFilmsByProfession;
+use Otus\Controllers\PopularFilmsByProfessionController;
 use Otus\Core\ControllerFactory;
 use Otus\Core\Database;
 use Otus\Core\FilmBuilder;
@@ -28,7 +28,7 @@ $builder->addDefinitions(array(
         '/popular/films/by-age-range' => DI\get(PopularFilmsByAgeRangeController::class),
         '/popular/films/by-genres' => DI\get(PopularFilmsByGenreController::class),
         '/popular/films/by-period' => DI\get(PopularFilmsByPeriodController::class),
-        '/popular/films/by-professions' => DI\get(PopularFilmsByProfession::class),
+        '/popular/films/by-professions' => DI\get(PopularFilmsByProfessionController::class),
     ),
 
     'db.username' => DI\env('db.username', 'postgres'),
@@ -66,7 +66,7 @@ $builder->addDefinitions(array(
             DI\get(FilmOptionsDto::class)
         ),
 
-    PopularFilmsByProfession::class => DI\object()
+    PopularFilmsByProfessionController::class => DI\object()
         ->constructor(
             DI\get(FilmRepository::class),
             DI\get(PopularFilmsByProfessionService::class),

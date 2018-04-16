@@ -10,7 +10,7 @@ use Otus\Interfaces\FilmServiceInterface;
 use Otus\Interfaces\RequestInterface;
 use Otus\Interfaces\ResponseInterface;
 
-class PopularFilmsByProfession implements ControllerInterface
+class PopularFilmsByProfessionController implements ControllerInterface
 {
     /**
      * @var FilmRepositoryInterface
