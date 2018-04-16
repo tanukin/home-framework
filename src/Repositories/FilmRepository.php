@@ -123,7 +123,7 @@ class FilmRepository implements FilmRepositoryInterface
         WHERE users.gender = 'F' AND (date_part('year', movies.release_date) BETWEEN $fromYear AND $toYear)
         GROUP BY movies.id
         ORDER BY AVG(rating) DESC
-        LIMIT 200;
+        LIMIT 100;
         ";
 
         $sth = $this->pdo->query($sql);
