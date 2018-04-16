@@ -5,6 +5,10 @@
         {
             "name": "Artemiy Pulyavin",
             "email": "artemiy@pulyavin.ru"
+        },
+        {
+            "name": "Anikin Evgenij",
+            "email": "anikin-elets@yandex.ru"
         }
     ],
     "require": {
