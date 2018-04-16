@@ -16,8 +16,10 @@ class PopularFilmsByProfessionService implements FilmServiceInterface
     {
         $professionsList = $optionsDto->getProfessionsList();
 
-        if (!isset($professionsList))
-            throw new FilmsException(sprintf("Item by id professionsList not found"));
+        if (is_null($professionsList))
+            throw new FilmsException(sprintf("Value for key professionsList isn't set"));
+
+        $professionsList = explode(',', $professionsList);
 
         return $filmRepository->getPopularFilmsByProfession($professionsList);
     }

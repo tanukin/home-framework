@@ -14,6 +14,8 @@ interface FilmServiceInterface
      * @param FilmOptionsDto $optionsDto
      *
      * @return array
+     *
+     * @throws FilmsException
      */
     public function getFilms(FilmRepositoryInterface $filmRepository, FilmOptionsDto $optionsDto): array;
 }

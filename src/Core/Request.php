@@ -32,7 +32,7 @@ class Request implements RequestInterface
      */
     public function getParam(string $key, string $default = null): ?string
     {
-        if (isset($this->get[$key]))
+        if (!empty($this->get[$key]))
             return $this->get[$key];
 
         return $default;

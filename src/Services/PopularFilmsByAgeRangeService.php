@@ -17,11 +17,11 @@ class PopularFilmsByAgeRangeService implements FilmServiceInterface
         $fromAge = $optionsDto->getFromAge();
         $toAge = $optionsDto->getToAge();
 
-        if (!isset($fromAge))
-            throw new FilmsException(sprintf("Item by id fromAge not found"));
+        if ($fromAge < 0)
+            throw new FilmsException(sprintf("Value for key fromAge isn't set"));
 
-        if (!isset($toAge))
-            throw new FilmsException(sprintf("Item by id toAge not found"));
+        if ($toAge < 0)
+            throw new FilmsException(sprintf("Value for key toAge isn't set"));
 
         if ($fromAge > $toAge)
             list($fromAge, $toAge) = [$toAge, $fromAge];

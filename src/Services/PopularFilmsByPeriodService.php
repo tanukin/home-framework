@@ -17,11 +17,11 @@ class PopularFilmsByPeriodService implements FilmServiceInterface
         $fromYear = $optionsDto->getFromYear();
         $toYear = $optionsDto->getToYear();
 
-        if (!isset($fromYear))
-            throw new FilmsException(sprintf("Item by id fromYear not found"));
+        if ($fromYear < 0)
+            throw new FilmsException(sprintf("Value for key fromYear isn't set"));
 
-        if (!isset($toYear))
-            throw new FilmsException(sprintf("Item by id toYear not found"));
+        if ($toYear < 0)
+            throw new FilmsException(sprintf("Value for key toYear isn't set"));
 
         if ($fromYear > $toYear)
             list($fromYear, $toYear) = [$toYear, $fromYear];

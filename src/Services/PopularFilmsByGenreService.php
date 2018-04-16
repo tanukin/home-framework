@@ -16,8 +16,10 @@ class PopularFilmsByGenreService implements FilmServiceInterface
     {
         $genresList = $optionsDto->getGenresList();
 
-        if (!isset($genresList))
-            throw new FilmsException(sprintf("Item by id genresList not found"));
+        if (is_null($genresList))
+            throw new FilmsException(sprintf("Value for key genresList isn't set"));
+
+        $genresList = explode(',', $genresList);
 
         return $filmRepository->getPopularFilmsByGenre($genresList);
     }

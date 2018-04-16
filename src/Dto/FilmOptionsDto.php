@@ -5,12 +5,12 @@ namespace Otus\Dto;
 class FilmOptionsDto
 {
     /**
-     * @var array
+     * @var null|string
      */
     private $genresList;
 
     /**
-     * @var array
+     * @var null|string
      */
     private $professionsList;
 
@@ -35,35 +35,35 @@ class FilmOptionsDto
     private $toYear;
 
     /**
-     * @return array
+     * @return null|string
      */
-    public function getGenresList(): array
+    public function getGenresList(): ?string
     {
         return $this->genresList;
     }
 
     /**
-     * @param string $genresList
+     * @param null|string $genresList
      */
-    public function setGenresList(string $genresList): void
+    public function setGenresList($genresList): void
     {
-        $this->genresList = explode(',', $genresList);
+        $this->genresList = $genresList;
     }
 
     /**
-     * @return array
+     * @return null|string
      */
-    public function getProfessionsList(): array
+    public function getProfessionsList(): ?string
     {
         return $this->professionsList;
     }
 
     /**
-     * @param string $professionsList
+     * @param null|string $professionsList
      */
-    public function setProfessionsList(string $professionsList): void
+    public function setProfessionsList($professionsList): void
     {
-        $this->professionsList = explode(',', $professionsList);
+        $this->professionsList = $professionsList;
     }
 
     /**

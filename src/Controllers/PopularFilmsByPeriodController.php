@@ -2,9 +2,10 @@
 
 namespace Otus\Controllers;
 
-use Otus\Core\HtmlResponse;
 use Otus\Core\ResponseBuilder;
+use Otus\Dto\Error;
 use Otus\Dto\FilmOptionsDto;
+use Otus\Exceptions\FilmsException;
 use Otus\Interfaces\ControllerInterface;
 use Otus\Interfaces\FilmRepositoryInterface;
 use Otus\Interfaces\FilmServiceInterface;
@@ -56,9 +57,15 @@ class PopularFilmsByPeriodController implements ControllerInterface
      */
     public function execute(RequestInterface $request): ResponseInterface
     {
-        $this->optionsDto->setFromYear($request->getParam("fromYear"));
-        $this->optionsDto->setToYear($request->getParam("toYear"));
-        $data = $this->filmService->getFilms($this->filmRepository, $this->optionsDto);
+        try {
+            $this->optionsDto->setFromYear($request->getParam("fromYear", -1));
+            $this->optionsDto->setToYear($request->getParam("toYear", -1));
+
+            $data = $this->filmService->getFilms($this->filmRepository, $this->optionsDto);
+        } catch (FilmsException $e) {
+            $data[] = $this->responseBuilder->createError(Error::BAD_REQUEST, $e->getMessage());
+            return $this->responseBuilder->getResponse($data);
+        }
 
         return $this->responseBuilder->getResponse($data);
     }
