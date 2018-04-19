@@ -10,10 +10,9 @@ class JsonResponseTest extends TestCase
     const DATA_FILM = [
         'id' => 1,
         'title' => 'title',
-        'release-date' => '2018-04-18'
+        'release_date' => '2018-04-18'
     ];
     const JSON_DATA_RESULT_FILM = '[{"id":1,"title":"title","release-date":"2018-04-18"}]';
-
     const ERROR_CODE = Error::BAD_REQUEST;
     const ERROR_MESSAGE = "";
     const JSON_DATA_RESULT_ERROR = '[{"status":400,"message":""}]';
@@ -34,12 +33,10 @@ class JsonResponseTest extends TestCase
         $this->assertEquals(self::JSON_DATA_RESULT_ERROR, $result);
     }
 
-
-
     private function getArrayFilms(): array
     {
         return [
-            new Film(self::DATA_FILM['id'], self::DATA_FILM['title'], self::DATA_FILM['release-date'])
+            new Film(self::DATA_FILM['id'], self::DATA_FILM['title'], self::DATA_FILM['release_date'])
         ];
     }
 

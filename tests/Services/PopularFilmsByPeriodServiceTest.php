@@ -26,6 +26,7 @@ class PopularFilmsByPeriodServiceTest extends TestCase
     {
         $this->filmRepository = $this->createMock(FilmRepositoryInterface::class);
         $this->optionsDto = new FilmOptionsDto();
+        parent::setUp();
     }
 
     public function correctDataDataProvider()
@@ -88,5 +89,4 @@ class PopularFilmsByPeriodServiceTest extends TestCase
             new Film(self::ID, self::TITLE, self::REALISE_DATE)
         ];
     }
-
 }

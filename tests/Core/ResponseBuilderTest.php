@@ -11,7 +11,7 @@ class ResponseBuilderTest extends TestCase
     const DATA = [
         'id' => 1,
         'title' => 'title',
-        'release-date' => '2018-04-18'
+        'release_date' => '2018-04-18'
     ];
 
     const ERROR_CODE = Error::BAD_REQUEST;
@@ -20,9 +20,9 @@ class ResponseBuilderTest extends TestCase
     public function testShould_ReturnErrorDto()
     {
         $responseBuilder = new ResponseBuilder();
-        $result = $responseBuilder->createError(self::ERROR_CODE,self::ERROR_MESSAGE);
+        $result = $responseBuilder->createError(self::ERROR_CODE, self::ERROR_MESSAGE);
 
-        $this->assertEquals($this->getError(self::ERROR_CODE,self::ERROR_MESSAGE), $result);
+        $this->assertEquals($this->getError(self::ERROR_CODE, self::ERROR_MESSAGE), $result);
     }
 
     public function testShould_ReturnJsonResponse()
@@ -41,7 +41,5 @@ class ResponseBuilderTest extends TestCase
     private function getError(int $status, string $message): Error
     {
         return new Error($status, $message);
-
     }
-
 }

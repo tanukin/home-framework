@@ -44,7 +44,7 @@ class ControllerFactoryTest extends TestCase
     }
 
     /**
-     *  @expectedException  \Otus\Exceptions\ControllerNotFoundException
+     * @expectedException  \Otus\Exceptions\ControllerNotFoundException
      */
     public function testShould_ReturnException_When_ControllerNotFound()
     {
@@ -66,7 +66,8 @@ class ControllerFactoryTest extends TestCase
              * {@inheritdoc}
              */
             public function execute(RequestInterface $request): ResponseInterface
-            { }
+            {
+            }
         };
     }
 }

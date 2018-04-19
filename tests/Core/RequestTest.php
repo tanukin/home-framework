@@ -19,13 +19,14 @@ class RequestTest extends TestCase
     public function setUp()
     {
         $this->request = new Request(self::GET, self::POST);
+        parent::setUp();
     }
 
     public function testShould_ReturnString_When_CorrectKey()
     {
-         $result = $this->callMethodGetParam(self::KEY);
+        $result = $this->callMethodGetParam(self::KEY);
 
-         $this->assertEquals(self::GET[self::KEY], $result);
+        $this->assertEquals(self::GET[self::KEY], $result);
     }
 
     public function testShould_ReturnNull_When_NotFoundKey()
@@ -37,5 +38,4 @@ class RequestTest extends TestCase
     {
         return $this->request->getParam($key);
     }
-
 }

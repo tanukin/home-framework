@@ -14,7 +14,6 @@ class RequestBuilderTest extends TestCase
     const GET = [];
     const POST = [];
 
-
     public function dataProvider()
     {
         return [

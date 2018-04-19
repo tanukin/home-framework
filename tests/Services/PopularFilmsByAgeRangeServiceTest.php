@@ -26,6 +26,7 @@ class PopularFilmsByAgeRangeServiceTest extends TestCase
     {
         $this->filmRepository = $this->createMock(FilmRepositoryInterface::class);
         $this->optionsDto = new FilmOptionsDto();
+        parent::setUp();
     }
 
     public function correctDataDataProvider()

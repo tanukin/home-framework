@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class FilmBuilderTest extends TestCase
 {
-    private $data = [
+    const DATA = [
         'id' => 1,
         'title' => 'title',
         'release_date' => '2018-04-18'
@@ -16,13 +16,12 @@ class FilmBuilderTest extends TestCase
     {
         $filmBuilder = new FilmBuilder();
 
-        $this->assertEquals($this->createFilm(), $filmBuilder->getFilm($this->data));
+        $this->assertEquals($this->createFilm(), $filmBuilder->getFilm(self::DATA));
     }
 
-
-    private function createFilm():Film
+    private function createFilm(): Film
     {
-        return new Film($this->data['id'], $this->data['title'], $this->data['release_date']);
+        return new Film(self::DATA['id'], self::DATA['title'], self::DATA['release_date']);
     }
 
 }
