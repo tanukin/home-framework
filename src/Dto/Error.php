@@ -15,6 +15,7 @@ class Error implements \JsonSerializable
     private $message;
 
     const BAD_REQUEST = 400;
+    const SERVER_ERROR = 500;
 
     /**
      * Film constructor.

@@ -32,8 +32,11 @@ class Request implements RequestInterface
      */
     public function getParam(string $key, string $default = null): ?string
     {
-        if (!empty($this->get[$key]))
+        if (array_key_exists($key, $this->get))
             return $this->get[$key];
+
+        if (array_key_exists($key, $this->post))
+            return $this->post[$key];
 
         return $default;
     }

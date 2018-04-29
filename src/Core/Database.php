@@ -21,6 +21,8 @@ class Database
     public function __construct(string $host, int $port, string $username, string $password, string $dbname)
     {
         $this->pdo = new \PDO("pgsql:host=$host;port=$port;dbname=$dbname;", $username, $password, null);
+        var_dump($this->pdo);
+        exit;
     }
 
     /**
