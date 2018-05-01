@@ -2,17 +2,16 @@
 
 namespace Otus\Interfaces;
 
+use Otus\Exceptions\RabbitException;
+
 interface WorkerSenderInterface
 {
     /**
-     * @param string $jsonData
+     * @param string $message
      *
      * @return bool
      *
-     * @throws \AMQPChannelException
-     * @throws \AMQPConnectionException
-     * @throws \AMQPExchangeException
-     * @throws \AMQPQueueException
+     * @throws RabbitException
      */
-    public function execute(string $jsonData): bool;
+    public function execute(string $message): bool;
 }

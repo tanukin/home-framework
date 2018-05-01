@@ -132,6 +132,26 @@ class FilmRepository implements FilmRepositoryInterface
     }
 
     /**
+     * Adding film to DB
+     *
+     * @param string $title
+     * @param string $releaseDate
+     *
+     * @return bool
+     */
+    public function addFilm(string $title, string $releaseDate): bool
+    {
+        $sql = "INSERT INTO movies (title, release_date) VALUES (:title, :releaseDate)";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindParam(':title', $title, \PDO::PARAM_STR);
+        $stmt->bindParam(':releaseDate', $releaseDate, \PDO::PARAM_STR);
+
+        return $stmt->execute();
+    }
+
+    /**
      * Get list of criteria from an array
      *
      * @param array $criteria
@@ -160,5 +180,4 @@ class FilmRepository implements FilmRepositoryInterface
             return $this->filmBuilder->getFilm($item);
         }, $data);
     }
-
 }

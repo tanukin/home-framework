@@ -41,4 +41,14 @@ interface FilmRepositoryInterface
      * @return FilmInterface[]
      */
     public function getPopularFilmsByPeriod(int $fromYear, int $toYear): array;
+
+    /**
+     * Adding film to DB
+     *
+     * @param string $title
+     * @param string $releaseDate
+     *
+     * @return bool
+     */
+    public function addFilm(string $title, string $releaseDate): bool;
 }

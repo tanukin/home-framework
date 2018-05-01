@@ -6,16 +6,16 @@ use Otus\Controllers\PopularFilmsByGenreController;
 use Otus\Controllers\PopularFilmsByPeriodController;
 use Otus\Controllers\PopularFilmsByProfessionController;
 use Otus\Core\ControllerFactory;
+use Otus\Core\ControllerWorkerFactory;
 use Otus\Core\Database;
 use Otus\Core\FilmBuilder;
 use Otus\Core\RequestBuilder;
 use Otus\Core\ResponseBuilder;
-use Otus\Core\WorkerSender;
 use Otus\Dto\FilmOptionsDto;
 use Otus\Interfaces\AddFilmServiceInterface;
 use Otus\Interfaces\ControllerFactoryInterface;
+use Otus\Interfaces\FilmRepositoryInterface;
 use Otus\Interfaces\RequestBuilderInterface;
-use Otus\Interfaces\WorkerSenderInterface;
 use Otus\Repositories\FilmRepository;
 use Otus\Services\PopularFilmsByAgeRangeService;
 use Otus\Services\PopularFilmsByGenreService;
@@ -35,19 +35,19 @@ $builder->addDefinitions(array(
         '/popular/films/by-genres' => DI\get(PopularFilmsByGenreController::class),
         '/popular/films/by-period' => DI\get(PopularFilmsByPeriodController::class),
         '/popular/films/by-professions' => DI\get(PopularFilmsByProfessionController::class),
-        '/film' => DI\get(AddFilmController::class)
+        '/film/' => DI\get(AddFilmController::class)
     ),
 
-    'db.username' => DI\env('db.username', 'postgres'),
-    'db.password' => DI\env('db.password', 'postgres'),
+    'db.username' => DI\env('db.username', 'pg_user'),
+    'db.password' => DI\env('db.password', 'pg_pass'),
     'db.host' => DI\env('db.host', 'postgresql'),
     'db.port' => DI\env('db.port', 5432),
     'db.name' => DI\env('db.name', 'movielens'),
 
     'rb.host' => DI\env('rb.host', 'rabbit'),
     'rb.port' => DI\env('rb.port', 5672),
-    'rb.login' => DI\env('rb.login', 'tester'),
-    'rb.password' => DI\env('rb.password', 'tester'),
+    'rb.login' => DI\env('rb.login', 'guest'),
+    'rb.password' => DI\env('rb.password', 'guest'),
 
     RequestBuilderInterface::class => DI\object(RequestBuilder::class),
 
@@ -91,13 +91,12 @@ $builder->addDefinitions(array(
 
     AddFilmController::class => DI\object()
         ->constructor(
-            DI\get(WorkerSenderInterface::class),
+            DI\get(ControllerWorkerFactory::class),
             DI\get(AddFilmServiceInterface::class),
             DI\get(ResponseBuilder::class)
         ),
 
-    WorkerSenderInterface::class => DI\object(WorkerSender::class),
-    WorkerSender::class => DI\object()
+    ControllerWorkerFactory::class => DI\object()
         ->constructor(
             DI\get('rb.host'),
             DI\get('rb.port'),
@@ -112,6 +111,7 @@ $builder->addDefinitions(array(
     PopularFilmsByPeriodService::class => DI\object(),
     PopularFilmsByProfessionService::class => DI\object(),
 
+    FilmRepositoryInterface::class => DI\object(FilmRepository::class),
     FilmRepository::class => DI\object()
         ->constructor(
             DI\get(\PDO::class),

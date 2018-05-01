@@ -23,6 +23,8 @@ RUN add-apt-repository -y ppa:ondrej/php \
         php7.1-xml \
         php7.1-zip \
         php7.1-gd \
+        php7.1-bcmath \
+        php7.1-amqp \
         curl \
         git \
         htop \

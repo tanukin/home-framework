@@ -2,6 +2,7 @@
 
 namespace Otus\Core;
 
+use Otus\Exceptions\RabbitException;
 use Otus\Interfaces\WorkerSenderInterface;
 
 class WorkerSender implements WorkerSenderInterface
@@ -28,7 +29,7 @@ class WorkerSender implements WorkerSenderInterface
 
     const ROUTING_KEY = 'add.film';
     const EXCHANGE_NAME = 'add_film';
-    const QUEUE_NAME = 'queue_film';
+    const QUEUE_NAME = 'add_film_queue';
 
     public function __construct(string $host, int $port, string $login, string $password)
     {
@@ -41,18 +42,27 @@ class WorkerSender implements WorkerSenderInterface
     /**
      * {@inheritdoc}
      */
-    public function execute(string $jsonData): bool
+    public function execute(string $message): bool
     {
-        $exchange = $this->getExchange();
+        try {
+            $exchange = $this->getExchange();
+            $queue = $this->getQueue();
+            $queue->bind(self::EXCHANGE_NAME, self::ROUTING_KEY);
 
-        $queue = $this->getQueue();
-        $queue->bind(self::EXCHANGE_NAME, self::ROUTING_KEY);
-
-        return $exchange->publish(
-            $jsonData,
-            self::ROUTING_KEY,
-            AMQP_NOPARAM
-        );
+            return $exchange->publish(
+                $message,
+                self::ROUTING_KEY,
+                AMQP_NOPARAM
+            );
+        } catch (\AMQPChannelException $e) {
+            throw new RabbitException("Can't create rabbit chanel");
+        } catch (\AMQPConnectionException $e) {
+            throw new RabbitException("Can't connect to rabbit");
+        } catch (\AMQPExchangeException $e) {
+            throw new RabbitException("Can't create rabbit exchange");
+        } catch (\AMQPQueueException $e) {
+            throw new RabbitException("Can't create rabbit queue");
+        }
     }
 
     /**
@@ -95,9 +105,9 @@ class WorkerSender implements WorkerSenderInterface
     /**
      * @return \AMQPQueue
      *
+     * @throws \AMQPChannelException
      * @throws \AMQPConnectionException
      * @throws \AMQPQueueException
-     * @throws \AMQPChannelException
      */
     protected function getQueue(): \AMQPQueue
     {

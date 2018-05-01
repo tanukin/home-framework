@@ -13,10 +13,6 @@ interface AddFilmServiceInterface
      *
      * @return array
      *
-     * @throws \AMQPChannelException
-     * @throws \AMQPConnectionException
-     * @throws \AMQPExchangeException
-     * @throws \AMQPQueueException
      * @throws RabbitException
      */
     public function add(WorkerSenderInterface $sender, Film $film): array;
