@@ -31,11 +31,15 @@ http://127.0.0.1:8000/popular/films/by-age-range?fromAge=18&toAge=35
 http://127.0.0.1:8000/popular/films/by-period?fromYear=1993&toYear=1997
 ~~~
 
-Запусть subscriber
-~~~
+Add film to repository with rabbitMQ
+===
+
+#### Запусть subscriber
+```yaml
 docker exec home-framework-project /var/www/bin/subscriber.php -d
-~~~
-Добавить новый фильм 
+```
+
+#### Добавить новый фильм 
 ~~~
 POST /film HTTP/1.1
 Host: anyName
