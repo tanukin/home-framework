@@ -7,7 +7,6 @@ Use
 composer install
 ```
 
-
 ```yaml
 docker-compose up
 ```
@@ -17,7 +16,6 @@ docker-compose up
 ~~~
 http://127.0.0.1:8000/popular/films/by-genres?genresList=Drama,Thriller,Comedy
 ~~~
-
 Необходимо вывести 50 самых популярных фильмов для указанного списка профессий
 ~~~
 http://127.0.0.1:8000/popular/films/by-professions?professionsList=Engineer,Programmer,Marketing
@@ -31,20 +29,37 @@ http://127.0.0.1:8000/popular/films/by-age-range?fromAge=18&toAge=35
 http://127.0.0.1:8000/popular/films/by-period?fromYear=1993&toYear=1997
 ~~~
 
-Add film to repository with rabbitMQ
+Add a movie to the repository using rabbitMQ
 ===
 
-#### Запусть subscriber
+#### Run the queue handler
 ```yaml
 docker exec home-framework-project /var/www/bin/subscriber.php -d
 ```
-
-#### Добавить новый фильм 
+#### RabbitMQ Management
 ~~~
-POST /film HTTP/1.1
+http://localhost:15672/#/
+~~~
+~~~
+login: guest
+password: guest
+~~~
+
+#### Add a new movie
+~~~
+POST /film/
+~~~
+```json
+{"title":"New Title Film","realiseDate":"2018-05-04"}
+```
+
+##### Example
+~~~
+POST /film/ HTTP/1.1
 Host: anyName
-Content-Type: application/x-www-form-urlencoded
-Content-Length: 43
+Content-Type: application/json
+Content-Length: 53
 
-title=New Title Film&realiseDate=2018-01-05
+{"title":"New Title Film","realiseDate":"2018-05-04"}
 ~~~
+
